@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Clientes</title>
+    <link rel="icon" type="image/png" href="">
+
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --container-bg: #ffffff;
+            --font-family: Arial, sans-serif;
+            --font-size: 4rem;
+            --padding: 20px;
+            --border-radius: 20px;
+            --box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clock-container {
+            background: var(--container-bg);
+            padding: var(--padding);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #clock {
+            font-size: var(--font-size);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: var(--container-bg);
+            padding: var(--padding);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+
+        input, button {
+            width: calc(100% - 22px);
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 3px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+
+        button {
+            background: #218838;
+            color: rgb(255, 255, 255);
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2b8b40;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            #clock {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div id="clock">00:00:00</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+
+    <div class="container">
+        <h2>Gerenciamento de Clientes</h2>
+        
+        <h3>Adicionar Cliente</h3>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="telefone" placeholder="Telefone">
+        <button onclick="adicionarCliente()">Adicionar</button>
+        
+        <h3>Lista de Clientes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Hora de Registro</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="lista-clientes"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let clientes = [];
+        
+        function adicionarCliente() {
+            let nome = document.getElementById("nome").value;
+            let email = document.getElementById("email").value;
+            let telefone = document.getElementById("telefone").value;
+            let now = new Date();
+            let horaRegistro = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+            
+            if (nome && email && telefone) {
+                let cliente = { nome, email, telefone, horaRegistro };
+                clientes.push(cliente);
+                atualizarLista();
+            } else {
+                alert("Preencha todos os campos!");
+            }
+        }
+        
+        function atualizarLista() {
+            let lista = document.getElementById("lista-clientes");
+            lista.innerHTML = "";
+            
+            clientes.forEach((cliente, index) => {
+                let linha = `
+                <tr>
+                    <td>${cliente.nome}</td>
+                    <td>${cliente.email}</td>
+                    <td>${cliente.telefone}</td>
+                    <td>${cliente.horaRegistro}</td>
+                    <td>
+                        <button onclick="editarCliente(${index})">Editar</button>
+                        <button onclick="deletarCliente(${index})">Deletar</button>
+                    </td>
+                </tr>`;
+                lista.innerHTML += linha;
+            });
+        }
+        
+        function editarCliente(index) {
+            let novoNome = prompt("Novo nome:", clientes[index].nome);
+            let novoEmail = prompt("Novo email:", clientes[index].email);
+            let novoTelefone = prompt("Novo telefone:", clientes[index].telefone);
+            
+            if (novoNome && novoEmail && novoTelefone) {
+                clientes[index].nome = novoNome;
+                clientes[index].email = novoEmail;
+                clientes[index].telefone = novoTelefone;
+                atualizarLista();
+            }
+        }
+        
+        function deletarCliente(index) {
+            if (confirm("Tem certeza que deseja deletar este cliente?")) {
+                clientes.splice(index, 1);
+                atualizarLista();
+            }
+        }
+    </script>
+</body>
+</html>
