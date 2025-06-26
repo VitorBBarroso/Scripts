@@ -11,7 +11,7 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 OCR_CONFIG = r'--oem 3 --psm 6'
 
 EMPRESAS_DISPONIVEIS = {'Works': '02', 'Qualitech': '02', 'Partner': '07', 'Presseg': '01'}
-TIPO_DOCS = {'Folha de Ponto': '01', 'FT': '02'}
+TIPO_DOCS = {'Folha de Ponto': '01', 'FT': '84'}
 ANO = {str(y): str(y)[-2:] for y in range(2020, 2026)}
 MES = {'Janeiro': '01', 'Fevereiro': '02', 'Março': '03', 'Abril': '04',
        'Maio': '05', 'Junho': '06', 'Julho': '07', 'Agosto': '08',
