@@ -56,6 +56,10 @@ def extrair_re(texto):
             tentativa = re.search(r'(\d{5,})\s*-\s*Nome', linha)
             if tentativa:
                 return tentativa.group(1)
+    # 3ª
+    cracha_match = re.search(r'crach[aá][: ]+\s*(\d{5,})', texto, re.IGNORECASE)
+    if cracha_match:
+        return cracha_match.group(1).lstrip("0")
     return "0000"
 
 def limpar_nome(nome):
