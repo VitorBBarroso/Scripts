@@ -142,28 +142,45 @@ def iniciar_script():
 # Interface
 janela = tk.Tk()
 janela.title("Codificador de PDFs")
-janela.geometry("280x180")
+janela.geometry("330x190")
+janela.configure(bg="#FF4141")
 
-tk.Label(janela, text="Empresa:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
-combo_empresa = ttk.Combobox(janela, values=list(EMPRESAS_DISPONIVEIS.keys()), state="readonly")
+# Fonte padrão
+fonte_padrao = ("Arial", 11)
+bg_padrao = "#FF4141"
+janela.configure(bg=bg_padrao)  
+# Estilo para Botões
+style = ttk.Style()
+style.theme_use("default")
+style.configure("TButton", font=fonte_padrao, background="#ffffff", foreground="#F8F8F8")
+style.map("TButton", background=[('active', '#FFB6B6')])
+# Estilo para Combobox
+style = ttk.Style()
+style.theme_use("default")
+style.configure("TCombobox", fieldbackground="white", background="#e0e0e0", font=fonte_padrao)
+style.map("TCombobox", fieldbackground=[('readonly', 'white')])
+
+# Labels e Comboboxes
+tk.Label(janela, text="Empresa:", bg=bg_padrao, font=fonte_padrao).grid(row=0, column=0, padx=5, pady=5, sticky="w")
+combo_empresa = ttk.Combobox(janela, values=list(EMPRESAS_DISPONIVEIS.keys()), state="readonly", font=fonte_padrao)
 combo_empresa.grid(row=0, column=1)
 combo_empresa.set(list(EMPRESAS_DISPONIVEIS.keys())[0])
 
-tk.Label(janela, text="Tipo de Documento:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
-combo_tipodoc = ttk.Combobox(janela, values=list(TIPO_DOCS.keys()), state="readonly")
+tk.Label(janela, text="Tipo de Documento:", bg=bg_padrao, font=fonte_padrao).grid(row=1, column=0, padx=5, pady=5, sticky="w")
+combo_tipodoc = ttk.Combobox(janela, values=list(TIPO_DOCS.keys()), state="readonly", font=fonte_padrao)
 combo_tipodoc.grid(row=1, column=1)
 combo_tipodoc.set(list(TIPO_DOCS.keys())[0])
 
-tk.Label(janela, text="Ano:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
-combo_ano = ttk.Combobox(janela, values=list(ANO.keys()), state="readonly")
+tk.Label(janela, text="Ano:", bg=bg_padrao, font=fonte_padrao).grid(row=2, column=0, padx=5, pady=5, sticky="w")
+combo_ano = ttk.Combobox(janela, values=list(ANO.keys()), state="readonly", font=fonte_padrao)
 combo_ano.grid(row=2, column=1)
 combo_ano.set(list(ANO.keys())[0])
 
-tk.Label(janela, text="Mês:").grid(row=3, column=0, padx=5, pady=5, sticky="w")
-combo_mes = ttk.Combobox(janela, values=list(MES.keys()), state="readonly")
+tk.Label(janela, text="Mês:", bg=bg_padrao, font=fonte_padrao).grid(row=3, column=0, padx=5, pady=5, sticky="w")
+combo_mes = ttk.Combobox(janela, values=list(MES.keys()), state="readonly", font=fonte_padrao)
 combo_mes.grid(row=3, column=1)
 combo_mes.set(list(MES.keys())[0])
 
-tk.Button(janela, text="Selecionar Pastas e Iniciar", command=iniciar_script).grid(row=4, column=0, columnspan=2, pady=15)
+tk.Button(janela, text="Selecionar Pastas e Iniciar", command=iniciar_script, font=fonte_padrao, bg="#ffffff").grid(row=4, column=0, columnspan=2, pady=15)
 
 janela.mainloop()
